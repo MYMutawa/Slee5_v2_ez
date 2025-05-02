@@ -8,12 +8,14 @@
 // Chassis constructor
 ez::Drive chassis(
     // These are your drive motors, the first motor is used for sensing!
-    {20, 1},     // Left Chassis Ports (negative port will reverse it!)
-    {-10, -2},  // Right Chassis Ports (negative port will reverse it!)
+    {20, -1},     // Left Chassis Ports (negative port will reverse it!)
+    {-10, 9},  // Right Chassis Ports (negative port will reverse it!)
 
     7,      // IMU Port
     4.125,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
-    200);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+    343);   // Wheel RPM = cartridge * (motor gear / wheel gear)
+
+    //pros::Task Lift_task(liftTask);
 
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
@@ -58,25 +60,23 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"Drive\n\nDrive forward and come back", drive_example},
-      {"Turn\n\nTurn 3 times.", turn_example},
-      {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
-      {"Drive and Turn\n\nSlow down during drive", wait_until_change_speed},
-      {"Swing Turn\n\nSwing in an 'S' curve", swing_example},
-      {"Motion Chaining\n\nDrive forward, turn, and come back, but blend everything together :D", motion_chaining},
-      {"Combine all 3 movements", combining_movements},
-      {"Interference\n\nAfter driving forward, robot performs differently if interfered or not", interfered_example},
-      {"Simple Odom\n\nThis is the same as the drive example, but it uses odom instead!", odom_drive_example},
-      {"Pure Pursuit\n\nGo to (0, 30) and pass through (6, 10) on the way.  Come back to (0, 0)", odom_pure_pursuit_example},
-      {"Pure Pursuit Wait Until\n\nGo to (24, 24) but start running an intake once the robot passes (12, 24)", odom_pure_pursuit_wait_until_example},
-      {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
-      {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
-      {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
+    Auton("Slee5 Auto", slee5Auto),
+    Auton("Grabs Ladder MOGO",Ladder_MOGO),
+    Auton("drive 48", drive_48),
+    Auton("drive 96", drive_96),
+    Auton("drive back 48", driveBack_48),
+    Auton("drive back 96", driveBack_96),
+    Auton("turn 90", turn_90),
+    Auton("turn 180", turn_180),
+    Auton("turn 360", turn_360),
+    Auton("turn back", turnBack),
   });
 
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
+  // ArmMotor.tare_position(); //To set the zero state for the motor
+  //liftPID.exit_condition_set(80,50,300,150,500,500);
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
 }
 
@@ -226,6 +226,8 @@ void ez_template_extras() {
   }
 }
 
+int countController=0; //this is to print encoder value for armMotor on the controller
+
 /**
  * Runs the operator control code. This function will be started in its own task
  * with the default priority and stack size whenever the robot is enabled via
@@ -248,14 +250,29 @@ void opcontrol() {
     ez_template_extras();
 
     chassis.opcontrol_tank();  // Tank control
-    // chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
+    //chassis.opcontrol_arcade_standard(ez::SPLIT);   // Standard split arcade
     // chassis.opcontrol_arcade_standard(ez::SINGLE);  // Standard single arcade
     // chassis.opcontrol_arcade_flipped(ez::SPLIT);    // Flipped split arcade
     // chassis.opcontrol_arcade_flipped(ez::SINGLE);   // Flipped single arcade
+    // if(master.get_digital_new_press(DIGITAL_L1)) {
+    //   liftPID.target_set(500); //Need to adjust this by trial and error
+    // }
     MogoClamp.button_toggle(master.get_digital(DIGITAL_A));
     setIntake((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*127);
     setChain((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*127);
 
+    // if(master.get_digital_new_press(DIGITAL_L1)) {
+    //   liftPID.target_set(500); //Need to adjust this by trial and error
+    // }
+    // else if(master.get_digital_new_press(DIGITAL_R1)) {
+    //   liftPID.target_set(0); //bring it to OG place
+    // }
+
+    // if (!(countController % 25)) {
+    //   master.print(0,0,"%lf",ArmMotor.get_position());
+    // }
+    // countController ++;
+    
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }
