@@ -88,19 +88,63 @@ void turnBack(){
 }
 
 void slee5Auto(){
-  chassis.pid_drive_set(-11_in, DRIVE_SPEED, true);
+  chassis.pid_drive_set(-34_in, DRIVE_SPEED, true);  //task1
   chassis.pid_wait();
-  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_turn_set(-24_deg, TURN_SPEED);
   chassis.pid_wait();
-  chassis.pid_drive_set(-26_in, 80, true);
+  chassis.pid_drive_set(-30_in, 60, true);  
+  chassis.pid_wait();
+  chassis.pid_drive_set(-11_in, 35, true);  
   chassis.pid_wait();
   MogoClamp.set(true);
   pros::delay(1000);
-  setChain(127);
-  pros::delay(1000);
-  chassis.pid_swing_set(ez::RIGHT_SWING, 90_deg, 110, 0);
+  chassis.pid_drive_set(20_in, 70, true);
   chassis.pid_wait();
-  setChain(0);
+  setChain(127);               //task2
+  pros::delay(2000);
+
+  chassis.pid_drive_set(30_in, 80, true); 
+  chassis.pid_wait();
+  MogoClamp.set(false);
+  chassis.pid_drive_set(24_in, 80, true);     //task3
+  chassis.pid_wait();
+  chassis.pid_turn_set(87_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-20_in, 60, true); 
+  chassis.pid_wait();
+
+
+  chassis.pid_drive_set(-16_in, 35, true);  
+  chassis.pid_wait();
+  MogoClamp.set(true);
+  pros::delay(1000);
+
+  chassis.pid_drive_set(-54_in, 60, true);    //task4
+  chassis.pid_wait(); 
+
+
+  chassis.pid_turn_set(65_deg, TURN_SPEED);
+  chassis.pid_wait();
+  // pros::delay(2000);
+  setChain(127);
+  setIntake(127);
+  chassis.pid_drive_set(45_in, 60, true); 
+  chassis.pid_wait();
+  pros::delay(1000);
+
+  chassis.pid_turn_set(100_deg, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(90_in, 60, true); 
+  chassis.pid_wait();
+  pros::delay(2000);
+
+  // chassis.pid_drive_set(10_in, DRIVE_SPEED, true);
+  // chassis.pid_wait();
+  // chassis.pid_swing_set(ez::RIGHT_SWING, 90_deg, 110, 0);
+  // chassis.pid_wait();
+  // setChain(0);
 }
 
 void Ladder_MOGO() {
