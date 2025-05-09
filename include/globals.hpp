@@ -7,3 +7,5 @@ extern pros::Motor ArmMotor;
 
 //Pneumatics
 extern ez::Piston MogoClamp;
+extern ez::Piston PneumaticArm;
+extern ez::Piston IntakeHolder;

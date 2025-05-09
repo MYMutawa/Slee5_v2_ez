@@ -48,7 +48,7 @@ void initialize() {
 
   // Configure your chassis controls
   chassis.opcontrol_curve_buttons_toggle(true);   // Enables modifying the controller curve with buttons on the joysticks
-  chassis.opcontrol_drive_activebrake_set(0.0);   // Sets the active brake kP. We recommend ~2.  0 will disable.
+  chassis.opcontrol_drive_activebrake_set(1.0);   // Sets the active brake kP. We recommend ~2.  0 will disable.
   chassis.opcontrol_curve_default_set(0.0, 0.0);  // Defaults for curve. If using tank, only the first parameter is used. (Comment this line out if you have an SD card!)
 
   // Set the drive to your own constants from autons.cpp!
@@ -60,8 +60,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-    Auton("Slee5 Auto", slee5Auto),
     Auton("Grabs Ladder MOGO",Ladder_MOGO),
+    Auton("Slee5 Auto", slee5Auto),
     Auton("drive 48", drive_48),
     Auton("drive 96", drive_96),
     Auton("drive back 48", driveBack_48),
@@ -259,7 +259,7 @@ void opcontrol() {
     // }
     MogoClamp.button_toggle(master.get_digital(DIGITAL_A));
     setIntake((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*127);
-    setChain((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*127);
+    setChain((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*90);
 
     // if(master.get_digital_new_press(DIGITAL_L1)) {
     //   liftPID.target_set(500); //Need to adjust this by trial and error

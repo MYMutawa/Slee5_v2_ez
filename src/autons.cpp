@@ -7,7 +7,7 @@
 
 // These are out of 127
 const int DRIVE_SPEED = 110;
-const int TURN_SPEED = 90;
+const int TURN_SPEED = 110;
 const int SWING_SPEED = 110;
 
 ///
@@ -88,55 +88,60 @@ void turnBack(){
 }
 
 void slee5Auto(){
-  chassis.pid_drive_set(-34_in, DRIVE_SPEED, true);  //task1
+  // Code_distance = 1.8181*distance
+  // distancde = code_distance/1.8181
+  chassis.pid_drive_set(-31_in, DRIVE_SPEED, true,true);  //task1
   chassis.pid_wait();
-  chassis.pid_turn_set(-24_deg, TURN_SPEED);
+  chassis.pid_turn_set(-90_deg, TURN_SPEED);
   chassis.pid_wait();
-  chassis.pid_drive_set(-30_in, 60, true);  
+  chassis.pid_drive_set(-24_in, 60, true);  
   chassis.pid_wait();
-  chassis.pid_drive_set(-11_in, 35, true);  
+  chassis.pid_turn_set(-90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-16_in, DRIVE_SPEED, true);  
   chassis.pid_wait();
   MogoClamp.set(true);
   pros::delay(1000);
-  chassis.pid_drive_set(20_in, 70, true);
+
+  chassis.pid_drive_set(11_in, 70, true);
   chassis.pid_wait();
-  setChain(127);               //task2
+  setChain(90);               //task2
   pros::delay(2000);
 
-  chassis.pid_drive_set(30_in, 80, true); 
+  chassis.pid_drive_set(16.5_in, 80, true); 
   chassis.pid_wait();
   MogoClamp.set(false);
-  chassis.pid_drive_set(24_in, 80, true);     //task3
+  chassis.pid_drive_set(13_in, 80, true);     //task3
   chassis.pid_wait();
   chassis.pid_turn_set(87_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(-20_in, 60, true); 
+  chassis.pid_drive_set(-11_in, 60, true); 
   chassis.pid_wait();
 
 
-  chassis.pid_drive_set(-16_in, 35, true);  
+  chassis.pid_drive_set(-9_in, 35, true);  
   chassis.pid_wait();
   MogoClamp.set(true);
   pros::delay(1000);
 
-  chassis.pid_drive_set(-54_in, 60, true);    //task4
+  chassis.pid_drive_set(-30_in, 60, true);    //task4
   chassis.pid_wait(); 
 
 
   chassis.pid_turn_set(65_deg, TURN_SPEED);
   chassis.pid_wait();
   // pros::delay(2000);
-  setChain(127);
-  setIntake(127);
-  chassis.pid_drive_set(45_in, 60, true); 
+  setChain(90);
+  setIntake(90);
+  chassis.pid_drive_set(25_in, 60, true); 
   chassis.pid_wait();
   pros::delay(1000);
 
   chassis.pid_turn_set(100_deg, TURN_SPEED);
   chassis.pid_wait();
 
-  chassis.pid_drive_set(90_in, 60, true); 
+  chassis.pid_drive_set(25_in, 60, true); 
   chassis.pid_wait();
   pros::delay(2000);
 
@@ -152,18 +157,64 @@ void Ladder_MOGO() {
   // The second parameter is the target in degrees
   // The third parameter is the speed of the moving side of the drive
   // The fourth parameter is the speed of the still side of the drive, this allows for wider arcs
-  chassis.pid_drive_set(-40_in, DRIVE_SPEED, true);
+  IntakeHolder.set(true);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true,true);  //task1
   chassis.pid_wait();
-  chassis.pid_swing_set(ez::RIGHT_SWING, 53_deg, 110, 0);
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
-  chassis.pid_drive_set(-48_in, 80, true);
+  chassis.pid_drive_set(19_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+  chassis.pid_turn_set(0, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-19.6_in, 90, true);  
   chassis.pid_wait();
   MogoClamp.set(true);
-  pros::delay(3000);
-  setChain(127);
-  chassis.pid_drive_set(44_in, 80, true);
-  pros::delay(5000);
+  pros::delay(500);
+  chassis.pid_drive_set(46_in, DRIVE_SPEED, true);  
+  setIntake(95);
+  setChain(95);
+  chassis.pid_wait_until(25_in);
+  MogoClamp.set(false);
+  chassis.pid_wait_quick_chain();
+  setIntake(0);
   setChain(0);
+  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-44_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+  MogoClamp.set(true);
+  pros::delay(500);
+  setIntake(95);
+  setChain(95);
+
+  chassis.pid_drive_set(-7.5_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(5_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-5_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-90, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-60_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+
+
+
+
+  // chassis.pid_drive_set(50_in, DRIVE_SPEED, true);  
+  // chassis.pid_wait();
+  // setIntake(0);
+  // setChain(0);
 }
 // . . .
 // Make your own autonomous functions here!
