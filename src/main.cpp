@@ -60,16 +60,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-    Auton("Grabs Ladder MOGO",Ladder_MOGO),
-    Auton("Slee5 Auto", slee5Auto),
-    Auton("drive 48", drive_48),
-    Auton("drive 96", drive_96),
-    Auton("drive back 48", driveBack_48),
-    Auton("drive back 96", driveBack_96),
-    Auton("turn 90", turn_90),
-    Auton("turn 180", turn_180),
-    Auton("turn 360", turn_360),
-    Auton("turn back", turnBack),
+    Auton("Slee5 Auto Routine",Slee5_Auto),
   });
 
   // Initialize chassis and auton selector
