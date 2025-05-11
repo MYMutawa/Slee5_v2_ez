@@ -60,6 +60,8 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+    Auton("Slee5 Auto Routine",Slee5_Auto_Hotel_Field),
+    Auton("Slee5 Skills Routine",Slee5_Skills),
     Auton("Slee5 Auto Routine",Slee5_Auto),
   });
 
@@ -249,6 +251,7 @@ void opcontrol() {
     //   liftPID.target_set(500); //Need to adjust this by trial and error
     // }
     MogoClamp.button_toggle(master.get_digital(DIGITAL_A));
+    PneumaticArm.button_toggle(master.get_digital(DIGITAL_Y));
     setIntake((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*127);
     setChain((master.get_digital(DIGITAL_R2)-master.get_digital(DIGITAL_L2))*90);
 

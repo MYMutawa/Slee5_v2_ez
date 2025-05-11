@@ -63,7 +63,7 @@ void Slee5_Auto() {
   chassis.pid_wait();
   chassis.pid_turn_set(0, TURN_SPEED);
   chassis.pid_wait();
-  chassis.pid_drive_set(-19.6_in, 90, true);  
+  chassis.pid_drive_set(-19.4_in, 80, true);  //was previously -19.6, 90 
   chassis.pid_wait();
   MogoClamp.set(true);
   pros::delay(500);
@@ -75,7 +75,7 @@ void Slee5_Auto() {
   chassis.pid_wait_quick_chain();
   setIntake(0);
   setChain(0);
-  chassis.pid_drive_set(-7_in, DRIVE_SPEED, true);  
+  chassis.pid_drive_set(-6_in, DRIVE_SPEED, true); //Previously 7inches  
   chassis.pid_wait();
   chassis.pid_turn_set(90_deg, TURN_SPEED);
   chassis.pid_wait();
@@ -113,6 +113,159 @@ void Slee5_Auto() {
   // setIntake(0);
   // setChain(0);
 }
-// . . .
-// Make your own autonomous functions here!
-// . . .
+
+void Slee5_Auto_Hotel_Field() {
+  // The first parameter is ez::LEFT_SWING or ez::RIGHT_SWING
+  // The second parameter is the target in degrees
+  // The third parameter is the speed of the moving side of the drive
+  // The fourth parameter is the speed of the still side of the drive, this allows for wider arcs
+  IntakeHolder.set(true);
+  chassis.pid_drive_set(-29_in, DRIVE_SPEED, true,true);  //task1
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(19_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+  chassis.pid_turn_set(0, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-19.4_in, 80, true);  //was previously -19.6, 90 
+  chassis.pid_wait();
+  MogoClamp.set(true);
+  pros::delay(500);
+  chassis.pid_drive_set(46_in, DRIVE_SPEED, true);  
+  setIntake(105);
+  setChain(105);
+  chassis.pid_wait_until(24_in); // was 25'
+  MogoClamp.set(false);
+  chassis.pid_wait_quick_chain();
+  setIntake(0);
+  setChain(0);
+  chassis.pid_drive_set(-5.3_in, DRIVE_SPEED, true); //Previously 7inches then 6' then 5' then 6'
+  chassis.pid_wait();
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-43.5_in, 90, true);  
+  chassis.pid_wait();
+  MogoClamp.set(true);
+  pros::delay(500);
+  PneumaticArm.set(true);
+  setIntake(105);
+  setChain(105);
+
+  chassis.pid_drive_set(-7.5_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(5.25_in, DRIVE_SPEED, true);  //was 5
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-5.25_in, DRIVE_SPEED, true);  //was 5
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(5.75_in, DRIVE_SPEED, true);  //was 5.65
+  chassis.pid_wait_until(3.5_in);
+  setIntake(0);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-90, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-30_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(0, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-10_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-90, TURN_SPEED);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-60_in, DRIVE_SPEED, true);  
+  chassis.pid_wait();
+
+
+
+
+
+  // chassis.pid_drive_set(50_in, DRIVE_SPEED, true);  
+  // chassis.pid_wait();
+  // setIntake(0);
+  // setChain(0);
+}
+
+void Slee5_Skills() {
+  IntakeHolder.set(true); //Unfolding Intake
+
+  setIntake(105);
+  setChain(105);
+
+
+  chassis.pid_drive_set(34_in, 90); 
+  chassis.pid_wait_until(26_in);
+  setIntake(0);
+  setChain(0);
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(90_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-24_in, 90); 
+  chassis.pid_wait();
+  MogoClamp.set(true);
+  setIntake(95);
+  setChain(95);
+
+  chassis.pid_turn_set(180_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(4_in, 90); 
+  chassis.pid_wait();
+  chassis.pid_drive_set(-4_in, 90); 
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(24_in, 90); //Uncomment under and put + sign
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(-45_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(24_in, 90); 
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-24_in, 90); 
+  chassis.pid_wait();
+
+  chassis.pid_turn_set(45_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_turn_relative_set(180_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(24_in, 90); 
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-24_in, 90); 
+  chassis.pid_wait();
+
+  chassis.pid_turn_relative_set(180_deg, 90);
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(78_in, 90); 
+  chassis.pid_wait();
+
+  chassis.pid_drive_set(-108_in, 90); 
+  chassis.pid_wait();
+
+  MogoClamp.set(false);
+
+
+
+
+
+
+
+}
